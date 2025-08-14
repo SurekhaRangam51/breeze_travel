@@ -24,7 +24,7 @@ const login=async(req,res)=>{
                 if(!user)  return res.json({err:"Invalid Number"})
                 
                 const decryptPassword=CryptoJS.AES.decrypt(user.password,process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8)
-                if(decryptPassword!==req.body.password)     res.status(401).json({err:"Invalid password"})
+                if(decryptPassword!==req.body.password)     return res.status(401).json({err:"Invalid password"})
                 
                 const token=jwt.sign({username:user.username},process.env.ACCESS_TOKEN)
                 const {password,...rest}=user._doc
